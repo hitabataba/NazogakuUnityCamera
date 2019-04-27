@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class WebCamController : MonoBehaviour
 {
-    int width = 1920;
-    int height = 1080;
-    int fps = 30;
+    public int width = 1920;
+    public int height = 1080;
+    int fps = 60;
     WebCamTexture webcamTexture;
 
     void Start()
     {
         WebCamDevice[] devices = WebCamTexture.devices;
-        webcamTexture = new WebCamTexture(devices[0].name, this.width, this.height, this.fps);
+        
+        webcamTexture = new WebCamTexture(devices[devices.Length - 1].name, this.width, this.height, this.fps);
         GetComponent<Renderer>().material.mainTexture = webcamTexture;
         webcamTexture.Play();
+        
     }
 
     void Update()
@@ -23,7 +25,6 @@ public class WebCamController : MonoBehaviour
         {
             if (webcamTexture != null)
             {
-                Debug.Log("Pause");
                 webcamTexture.Pause();
             }
         }
@@ -33,7 +34,6 @@ public class WebCamController : MonoBehaviour
             {
                 Debug.Log("Play");
                 webcamTexture.Play();
-//                SaveToPNGFile(webcamTexture.GetPixels(), Application.dataPath + "/../SavedScreen.png");
             }
         }
     }
